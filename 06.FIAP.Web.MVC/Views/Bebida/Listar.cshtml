@@ -1,0 +1,33 @@
+﻿@model List<_06.FIAP.Web.MVC.Models.Bebida>
+
+@{
+    ViewBag.Title = "Listar";
+}
+
+<h2>Listar</h2>
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger">@TempData["msg"]</div>
+}
+
+<table class="table">
+    <tr>
+        <th>Codigo</th>
+        <th>Nome</th>
+        <th>Destilada</th>
+        <th>Preco</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.BebidaId</td>
+            <td>@item.Nome</td>
+            <td>@item.Destilada</td>
+            <td>@item.Preco</td>
+            <td>
+                @Html.ActionLink("Editar", "Atualizar", new { id = item.BebidaId })
+            </td>
+        </tr>
+    }
+</table>

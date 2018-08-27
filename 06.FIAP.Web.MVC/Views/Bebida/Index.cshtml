@@ -3,6 +3,10 @@
     ViewBag.Title = "AbrirForm";
 }
 
+@if (TempData["msg"] != null)
+{
+    <div class="alert alert-danger">@TempData["msg"]</div>
+}
 <h2>Cadastra ae mano</h2>
 
 <form action="Index" method="post" class="form-group">
