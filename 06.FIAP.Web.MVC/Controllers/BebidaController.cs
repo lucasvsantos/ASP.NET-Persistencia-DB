@@ -12,6 +12,25 @@ namespace _06.FIAP.Web.MVC.Controllers
     {
         private BotecoContext _context = new BotecoContext();
 
+        [HttpGet]
+        public ActionResult Pesquisar(string nome)
+        {
+            //Pesquisa pelo nome da bebida
+            var busca = _context.Bebidas.Where(b => b.Nome.Contains(nome)).ToList();
+
+            return View("Listar", busca);
+        }
+
+        [HttpPost]
+        public ActionResult Remover(int id)
+        {
+            var bebida = _context.Bebidas.Find(id);
+            _context.Bebidas.Remove(bebida);
+            _context.SaveChanges();
+            TempData["msg"] = "Bebida removida!!!!!";
+            return RedirectToAction("Listar");
+        }   
+
         [HttpPost]
         public ActionResult Atualizar(Bebida bebida)
         {

@@ -10,12 +10,19 @@
     <div class="alert alert-danger">@TempData["msg"]</div>
 }
 
+@using (Html.BeginForm("Pesquisar", "Bebida", FormMethod.Get))
+{
+    <input type="text" name="nome" class="form-control"  id="id-nome" placeholder="Digite um nome para pesquisar"/>
+    <input type="submit"value="Pesquisar" class="btn btn-danger" />
+}
+
 <table class="table">
     <tr>
         <th>Codigo</th>
         <th>Nome</th>
         <th>Destilada</th>
         <th>Preco</th>
+        <th></th>
         <th></th>
     </tr>
     @foreach (var item in Model)
@@ -26,8 +33,38 @@
             <td>@item.Destilada</td>
             <td>@item.Preco</td>
             <td>
-                @Html.ActionLink("Editar", "Atualizar", new { id = item.BebidaId })
+                @Html.ActionLink("Editar", "Atualizar", new { id = item.BebidaId }, new { @class = "btn btn-info btn-xs" })
+            </td>
+            <td>
+                <button onclick="codigoBebida.value= @item.BebidaId" type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">
+                    Remover
+                </button>
             </td>
         </tr>
     }
 </table>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Confirmacao</h4>
+            </div>
+            <div class="modal-body">
+                Deseja realmente apagar a bebida?
+            </div>
+            <div class="modal-footer">
+                @using (Html.BeginForm("Remover","Bebida"))
+                {
+                    <input type="hidden" name="id" id="codigoBebida"  />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Remover</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>
